@@ -13,6 +13,8 @@ public class Interaction : MonoBehaviour
     public InteractionType interaction;
     [Range(1, 10)]
     public int cameraSpeed = 5;
+    [Range(1, 60)]
+    public float openDoorAfterSec = 60;
 
     private TMP_Text text;
     private TMP_Text exitText;
@@ -20,6 +22,8 @@ public class Interaction : MonoBehaviour
     private bool isPlaying;
     private GameObject player;
     private Deformation deform;
+    private Door door;
+    private float sitTime;
 
     private Vector3 startPos;
     private Vector3 endPos;
@@ -37,6 +41,7 @@ public class Interaction : MonoBehaviour
         exitText = GameObject.FindGameObjectWithTag("ExitText").GetComponent<TMP_Text>();
 
         deform = GameObject.FindGameObjectWithTag("Deform").GetComponent<Deformation>();
+        door = GameObject.FindGameObjectWithTag("Door").GetComponent<Door>();
 
         textColor = text.color;
         text.SetText("");
@@ -159,6 +164,19 @@ public class Interaction : MonoBehaviour
         yield return null;
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player") && interaction == InteractionType.StandUp)
+        {
+            sitTime += Time.deltaTime;
+
+            if (sitTime >= openDoorAfterSec)
+            {
+                door.Spin();
+            }
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -182,6 +200,8 @@ public class Interaction : MonoBehaviour
             // reset exit
             if (interaction == InteractionType.Exit)
                 interaction = InteractionType.WaitExit;
+            // reset sit time
+            sitTime = 0;
         }
     }
 

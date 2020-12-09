@@ -51,3 +51,6 @@ sysinfo.txt
 crashlytics-build.properties
 
 .DS_Store
+
+# Ignore copyright music
+Assets/Resources/Music/Eden.mp3
