@@ -7,7 +7,7 @@ A 5-minute walking simulator. Play it on [itch](https://knh190.itch.io/oneseriou
 ![](./images/osp_1.png)
 ![](./images/osp_2.png)
 
-_Made over Dec 17th, 2020 night._
+_Made over Dec 7th, 2020 night._
 
 ## References
 
